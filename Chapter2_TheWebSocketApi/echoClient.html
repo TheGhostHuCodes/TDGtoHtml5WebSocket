@@ -8,7 +8,8 @@
 // Initialize WebSocket connection and event handlers.
 function setup() {
   output = document.getElementById("output");
-  ws = new WebSocket("ws://echo.websocket.org/echo");
+//  ws = new WebSocket("ws://echo.websocket.org/echo");
+  ws = new WebSocket("ws://localhost:9999");
 
   // Listen for the connection open event then call the sendMessage function.
   ws.onopen = function(e) {
@@ -18,7 +19,7 @@ function setup() {
 
   // Listen for the close connection event.
   ws.onclose = function(e) {
-    log("Disconnected: " + e.reason);
+    log("Disconnected: code: " + e.code + " reason: " + e.reason);
   }
 
   // Listen for connection errors.
@@ -30,7 +31,7 @@ function setup() {
   ws.onmessage = function(e) {
     log("Message received: " + e.data);
     // Close the socket once one message has arrived.
-    ws.close();
+    ws.close(1000, "All done! One message received.");
   }
 }
 
